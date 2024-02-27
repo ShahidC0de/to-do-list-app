@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:todo_app/routes/routes.dart';
+import 'package:todo_app/screens/sign_up_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -36,16 +38,101 @@ class LoginScreen extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 100),
+        padding: const EdgeInsets.symmetric(horizontal: 50),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
+            const Spacer(),
+            SizedBox(
+              height: 60,
+              width: 300,
+              child: TextFormField(
+                decoration: InputDecoration(
+                    hintText: 'E-mail',
+                    prefixIcon: const Icon(
+                      Icons.email,
+                      color: Colors.purple,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: const BorderSide(
+                        color: Colors.purple,
+                        width: 2,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: const BorderSide(
+                          color: Colors.purple,
+                          width: 4,
+                        ))),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+              height: 60,
+              width: 300,
+              child: TextFormField(
+                decoration: InputDecoration(
+                    hintText: 'Password',
+                    prefixIcon: const Icon(
+                      Icons.password,
+                      color: Colors.purple,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: const BorderSide(
+                        color: Colors.purple,
+                        width: 2,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: const BorderSide(
+                          color: Colors.purple,
+                          width: 4,
+                        ))),
+              ),
+            ),
+            const SizedBox(
               height: 50,
-              width: 100,
-              child: TextFormField(),
-            )
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.purple,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+              onPressed: () {
+                //   Navigator.of(context).pushNamed(loginView);
+              },
+              child: Text(
+                'Sign In',
+                style: GoogleFonts.acme(
+                  fontSize: 20,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const Spacer(),
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed(signView);
+                },
+                child: Text(
+                  "Don't have an account?",
+                  style: GoogleFonts.acme(
+                    color: Colors.purple,
+                    fontSize: 15,
+                  ),
+                ))
           ],
         ),
       ),

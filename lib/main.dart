@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/routes/routes.dart';
 import 'package:todo_app/screens/login_screen.dart';
+import 'package:todo_app/screens/sign_up_screen.dart';
 import 'package:todo_app/screens/welome_screen.dart';
 
 void main() {
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         loginView: (context) => const LoginScreen(),
+        signView: (context) => const SignUpView(),
       },
       home: const WelcomeScreen(),
     );

@@ -43,7 +43,7 @@ class WelcomeScreen extends StatelessWidget {
                 Navigator.of(context).pushNamed(loginView);
               },
               child: Text(
-                'Login',
+                'Sign In',
                 style: GoogleFonts.acme(
                   fontSize: 20,
                   color: Colors.white,
@@ -64,7 +64,7 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                // Add your signup logic here
+                Navigator.of(context).pushNamed(signView);
               },
               child: Text(
                 'Signup',
