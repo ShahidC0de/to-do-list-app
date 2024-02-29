@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:todo_app/firebase_services/firebase_services.dart.dart';
+import 'package:todo_app/firebase_services/service_provider.dart';
 
 class SignUpView extends StatelessWidget {
   const SignUpView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController name = TextEditingController();
+    TextEditingController email = TextEditingController();
+    TextEditingController password = TextEditingController();
+    TextEditingController confirmPassword = TextEditingController();
+
+    ServiceProvider serviceProvider = ServiceProvider();
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -41,6 +49,7 @@ class SignUpView extends StatelessWidget {
                   height: 60,
                   width: 300,
                   child: TextFormField(
+                    controller: name,
                     decoration: InputDecoration(
                         hintText: 'Full Name',
                         prefixIcon: const Icon(
@@ -69,6 +78,7 @@ class SignUpView extends StatelessWidget {
                   height: 60,
                   width: 300,
                   child: TextFormField(
+                    controller: email,
                     decoration: InputDecoration(
                         hintText: 'E-mail',
                         prefixIcon: const Icon(
@@ -97,6 +107,7 @@ class SignUpView extends StatelessWidget {
                   height: 60,
                   width: 300,
                   child: TextFormField(
+                    controller: password,
                     decoration: InputDecoration(
                         hintText: 'Choose a password',
                         prefixIcon: const Icon(
@@ -125,6 +136,7 @@ class SignUpView extends StatelessWidget {
                   height: 60,
                   width: 300,
                   child: TextFormField(
+                    controller: confirmPassword,
                     decoration: InputDecoration(
                         hintText: 'Confirm Password',
                         prefixIcon: const Icon(
@@ -163,10 +175,15 @@ class SignUpView extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    //   Navigator.of(context).pushNamed(loginView);
+                    serviceProvider.createUserWithEmailAndPassword(
+                      name.text,
+                      email.text,
+                      password.text,
+                      confirmPassword.text,
+                    );
                   },
                   child: Text(
-                    'Sign In',
+                    'Create Account',
                     style: GoogleFonts.acme(
                       fontSize: 20,
                       color: Colors.white,

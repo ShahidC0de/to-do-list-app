@@ -2,13 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_app/routes/routes.dart';
-import 'package:todo_app/screens/sign_up_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController email = TextEditingController();
+    TextEditingController password = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -48,6 +49,7 @@ class LoginScreen extends StatelessWidget {
               height: 60,
               width: 300,
               child: TextFormField(
+                controller: email,
                 decoration: InputDecoration(
                     hintText: 'E-mail',
                     prefixIcon: const Icon(
@@ -76,6 +78,7 @@ class LoginScreen extends StatelessWidget {
               height: 60,
               width: 300,
               child: TextFormField(
+                controller: password,
                 decoration: InputDecoration(
                     hintText: 'Password',
                     prefixIcon: const Icon(
@@ -109,9 +112,7 @@ class LoginScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
-              onPressed: () {
-                //   Navigator.of(context).pushNamed(loginView);
-              },
+              onPressed: () {},
               child: Text(
                 'Sign In',
                 style: GoogleFonts.acme(
