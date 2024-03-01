@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:todo_app/firebase_services/firebase_services.dart.dart';
 import 'package:todo_app/firebase_services/service_provider.dart';
+import 'package:todo_app/routes/routes.dart';
 
 class SignUpView extends StatelessWidget {
   const SignUpView({super.key});
@@ -174,13 +174,21 @@ class SignUpView extends StatelessWidget {
                       borderRadius: BorderRadius.circular(30),
                     ),
                   ),
-                  onPressed: () {
-                    serviceProvider.createUserWithEmailAndPassword(
+                  onPressed: () async {
+                    const CircularProgressIndicator();
+                    bool userIsValid =
+                        await serviceProvider.createUserWithEmailAndPassword(
                       name.text,
                       email.text,
                       password.text,
                       confirmPassword.text,
                     );
+                    if (userIsValid) {
+                      // ignore: use_build_context_synchronously
+                      Navigator.of(context).pop();
+                      // ignore: use_build_context_synchronously
+                      Navigator.of(context).pushNamed(homeView);
+                    }
                   },
                   child: Text(
                     'Create Account',

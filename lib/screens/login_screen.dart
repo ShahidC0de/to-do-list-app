@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:todo_app/firebase_services/service_provider.dart';
 import 'package:todo_app/routes/routes.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -8,6 +9,7 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ServiceProvider serviceProvider = ServiceProvider();
     TextEditingController email = TextEditingController();
     TextEditingController password = TextEditingController();
     return Scaffold(
@@ -112,7 +114,16 @@ class LoginScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(30),
                 ),
               ),
-              onPressed: () {},
+              onPressed: () async {
+                bool signedIn = await serviceProvider.signInTheUser(
+                    email.text, password.text);
+                if (signedIn) {
+                  // ignore: use_build_context_synchronously
+                  Navigator.of(context).pushNamed(homeView);
+                } else {
+                  print('signedIn is false');
+                }
+              },
               child: Text(
                 'Sign In',
                 style: GoogleFonts.acme(

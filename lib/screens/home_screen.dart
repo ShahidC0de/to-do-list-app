@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -24,13 +25,76 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      body: const Padding(
-        padding: EdgeInsets.all(12),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-          ),
+      body: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Column(
+          children: [
+            const Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    // Your scrollable content here
+                    // For example, you can add Text widgets or other widgets
+                    // Spacer(),
+                    // Spacer(),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 60,
+              width: double.infinity,
+              child: Stack(
+                children: [
+                  Center(
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        hintText: 'Enter Note',
+                        prefixIcon: const Icon(
+                          Icons.note_add,
+                          color: Colors.purple,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(
+                            color: Colors.purple,
+                            width: 2,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(
+                            color: Colors.purple,
+                            width: 4,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: SizedBox(
+                        height: 60,
+                        width: 60,
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.purple,
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(20))),
+                            onPressed: () {},
+                            child: const Icon(
+                              Icons.send,
+                              color: Colors.white,
+                            ))),
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 12,
+            )
+          ],
         ),
       ),
     );
