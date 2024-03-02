@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:todo_app/firebase_services/firebase_services.dart.dart';
 import 'package:todo_app/models/user_model.dart';
+import 'package:todo_app/models/user_note_model.dart';
 
 class ServiceProvider extends ChangeNotifier {
   //..............................................CLASSES INSTANCE...............................
@@ -9,6 +10,22 @@ class ServiceProvider extends ChangeNotifier {
   final FirebaseServices _firebaseServices = FirebaseServices();
   //..............................................LISTS..........................................
   List<UserModel> usersList = [];
+
+  //..................................getting all the notes belongs to current user ......................
+  Future<List<NoteModel>> callbackFunction() async {
+    List<NoteModel> userNotes = [];
+
+    userNotes = await _firebaseServices.fetchUserNotes();
+    return userNotes;
+  }
+
+  //............................................Creating User Note ..................
+  Future<void> createUserNote(String userNote) async {
+    String userId = _auth.currentUser!.uid;
+    NoteModel noteModel = NoteModel(userId: userId, userNote: userNote);
+    await _firebaseServices.createUserNote(noteModel);
+  }
+
   //..............................................CREATING USER..................................
   Future<bool> createUserWithEmailAndPassword(
     String name,

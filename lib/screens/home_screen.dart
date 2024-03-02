@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:todo_app/firebase_services/service_provider.dart';
+import 'package:todo_app/models/user_note_model.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final List<NoteModel> userNotes;
+  const HomeScreen({Key? key, required this.userNotes}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -12,6 +14,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    ServiceProvider serviceProvider = ServiceProvider();
+    TextEditingController note = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -48,6 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Center(
                     child: TextFormField(
+                      controller: note,
                       decoration: InputDecoration(
                         hintText: 'Enter Note',
                         prefixIcon: const Icon(
@@ -82,7 +87,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 backgroundColor: Colors.purple,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20))),
-                            onPressed: () {},
+                            onPressed: () async {
+                              await serviceProvider.createUserNote(note.text);
+                            },
                             child: const Icon(
                               Icons.send,
                               color: Colors.white,

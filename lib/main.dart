@@ -40,7 +40,6 @@ class MyApp extends StatelessWidget {
           loginView: (context) => const LoginScreen(),
           signView: (context) => const SignUpView(),
           verificationEmailScreen: (context) => const EmailVerification(),
-          homeView: (context) => const HomeScreen(),
         },
         home: const WelcomeScreen(),
       ),

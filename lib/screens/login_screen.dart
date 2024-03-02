@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_app/firebase_services/service_provider.dart';
+import 'package:todo_app/models/user_note_model.dart';
 import 'package:todo_app/routes/routes.dart';
+import 'package:todo_app/screens/home_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -119,7 +121,13 @@ class LoginScreen extends StatelessWidget {
                     email.text, password.text);
                 if (signedIn) {
                   // ignore: use_build_context_synchronously
-                  Navigator.of(context).pushNamed(homeView);
+                  List<NoteModel> userNotes =
+                      await serviceProvider.callbackFunction();
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (ctx) => HomeScreen(userNotes: userNotes),
+                    ),
+                  );
                 } else {
                   print('signedIn is false');
                 }
