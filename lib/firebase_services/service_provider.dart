@@ -10,13 +10,17 @@ class ServiceProvider extends ChangeNotifier {
   final FirebaseServices _firebaseServices = FirebaseServices();
   //..............................................LISTS..........................................
   List<UserModel> usersList = [];
+  static List<NoteModel> usersNotesList = [];
+
+  //.........................................  parsing it to list.................................
+  Stream<User?> get getAuthChange => _auth.authStateChanges();
+  static List<NoteModel> get getuserNotes => usersNotesList;
 
   //..................................getting all the notes belongs to current user ......................
   Future<List<NoteModel>> callbackFunction() async {
-    List<NoteModel> userNotes = [];
-
-    userNotes = await _firebaseServices.fetchUserNotes();
-    return userNotes;
+    usersNotesList = await _firebaseServices.fetchUserNotes();
+    ChangeNotifier();
+    return usersNotesList;
   }
 
   //............................................Creating User Note ..................
@@ -43,11 +47,9 @@ class ServiceProvider extends ChangeNotifier {
         _firebaseServices.createUser(userModel);
         return true;
       } else {
-        print('password does not matched');
         return false;
       }
     } catch (e) {
-      print(e.toString());
       return false;
     }
   }
@@ -61,7 +63,6 @@ class ServiceProvider extends ChangeNotifier {
       _firebaseServices.logInTheUser(email, password);
       return true;
     } catch (e) {
-      print(e.toString());
       return false;
     }
   }

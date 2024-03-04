@@ -20,9 +20,9 @@ class FirebaseServices {
         .collection('usersNotes')
         .where('userId', isEqualTo: currentUserId)
         .get();
-    for (var doc in querySnapshot.docs) {
-      userNotes.add(const NoteModel(userId: 'userId', userNote: 'userNote'));
-    }
+    userNotes = querySnapshot.docs
+        .map((doc) => NoteModel.fromJson(doc.data() as Map<String, dynamic>))
+        .toList();
     return userNotes;
   }
 
