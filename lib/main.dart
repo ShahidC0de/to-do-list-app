@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/firebase_services/service_provider.dart';
 import 'package:todo_app/routes/routes.dart';
+import 'package:todo_app/screens/add_note.dart';
 import 'package:todo_app/screens/email_verification_screen.dart';
 import 'package:todo_app/screens/home_screen.dart';
 import 'package:todo_app/screens/login_screen.dart';
@@ -41,6 +42,7 @@ class MyApp extends StatelessWidget {
           signView: (context) => const SignUpView(),
           homeView: (context) => const HomeScreen(),
           verificationEmailScreen: (context) => const EmailVerification(),
+          addNoteView: (context) => const AddNote(),
         },
         home: const WelcomeScreen(),
       ),

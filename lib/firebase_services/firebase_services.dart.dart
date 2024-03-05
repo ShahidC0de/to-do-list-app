@@ -1,12 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:todo_app/firebase_services/service_provider.dart';
 import 'package:todo_app/models/user_model.dart';
 import 'package:todo_app/models/user_note_model.dart';
 
 class FirebaseServices {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore
+      .instance; // creating an instance of the firebase firestore.
+
+  final FirebaseAuth _auth = FirebaseAuth.instance; //firebaseAuth instance.
   //......................... getting currentuserId.....................
+
   String getUserId() {
     String userId = _auth.currentUser!.uid;
     return userId;
@@ -26,12 +30,30 @@ class FirebaseServices {
     return userNotes;
   }
 
+  // .................................................. deleting the userNote ...........................
+  Future<NoteModel> deleteTheUserNote(NoteModel noteModel) async {
+    String documentId = noteModel.documentId;
+    CollectionReference collectionReference =
+        _firestore.collection('usersNotes');
+    collectionReference.doc(documentId).delete();
+    return noteModel;
+  }
+
   //.................................... Saving the userNote.............................
-  Future<NoteModel> createUserNote(NoteModel noteModel) async {
+  Future<NoteModel> createUserNote(
+    String userId,
+    String note,
+  ) async {
     CollectionReference usersNotesReference =
         _firestore.collection('usersNotes');
     DocumentReference userNoteDocumentReference = usersNotesReference.doc();
+    NoteModel noteModel = NoteModel(
+        isChecked: false,
+        userId: userId,
+        userNote: note,
+        documentId: userNoteDocumentReference.id);
     await userNoteDocumentReference.set(noteModel.toJson());
+    ServiceProvider.usersNotesList.add(noteModel);
     return noteModel;
   }
 
