@@ -15,6 +15,16 @@ class ServiceProvider extends ChangeNotifier {
   //.........................................  parsing it to list.................................
   Stream<User?> get getAuthChange => _auth.authStateChanges();
   static List<NoteModel> get getuserNotes => usersNotesList;
+  //.................................... updating user note ....................
+  Future<void> updateNote(
+    String userId,
+    String title,
+    String documentId,
+    String userNote,
+  ) async {
+    _firebaseServices.updateUserNote(documentId, userNote, title, userId);
+  }
+
   //.................................... deleting user note.....................................
   Future<void> deleteNote(NoteModel noteModel) async {
     await _firebaseServices.deleteTheUserNote(noteModel);
@@ -29,9 +39,9 @@ class ServiceProvider extends ChangeNotifier {
   }
 
   //............................................Creating User Note ..................
-  Future<void> createUserNote(String userNote) async {
+  Future<void> createUserNote(String userNote, String title) async {
     String userId = _auth.currentUser!.uid;
-    await _firebaseServices.createUserNote(userId, userNote);
+    await _firebaseServices.createUserNote(userId, userNote, title);
   }
 
   //..............................................CREATING USER..................................

@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_app/firebase_services/service_provider.dart';
 import 'package:todo_app/models/user_note_model.dart';
 import 'package:todo_app/routes/routes.dart';
+import 'package:todo_app/screens/edit_note.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -61,30 +62,76 @@ class _HomeScreenState extends State<HomeScreen> {
                             const NeverScrollableScrollPhysics(), // Disable scrolling
                         itemBuilder: (context, index) {
                           NoteModel note = userNotes[index];
-                          return ListTile(
-                            leading: IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    userNotes[index].isChecked =
-                                        !userNotes[index].isChecked;
-                                    if (userNotes[index].isChecked) {
-                                      serviceProvider
-                                          .deleteNote(userNotes[index]);
-                                    }
-                                  });
-                                },
-                                icon: userNotes[index].isChecked
-                                    ? const Icon(
-                                        Icons.check,
-                                        color: Colors.purple,
-                                      )
-                                    : const Icon(
-                                        Icons.check_box_outline_blank)),
-                            title: Text(note.userNote,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                )),
+                          return Container(
+                            margin: const EdgeInsets.symmetric(vertical: 8),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                border: const Border(
+                                    bottom: BorderSide(
+                                      style: BorderStyle.solid,
+                                      strokeAlign: BorderSide.strokeAlignCenter,
+                                      width: 23,
+                                      color: Colors.purple,
+                                    ),
+                                    left: BorderSide(
+                                      color: Colors.purple,
+                                    ),
+                                    right: BorderSide(
+                                      color: Colors.purple,
+                                    ),
+                                    top: BorderSide(
+                                      color: Colors.purple,
+                                    ))),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: ListTile(
+                                contentPadding: const EdgeInsets.all(8),
+                                leading: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        userNotes[index].isChecked =
+                                            !userNotes[index].isChecked;
+                                        if (userNotes[index].isChecked) {
+                                          serviceProvider
+                                              .deleteNote(userNotes[index]);
+                                        }
+                                      });
+                                    },
+                                    icon: userNotes[index].isChecked
+                                        ? const Icon(
+                                            Icons.check,
+                                            color: Colors.purple,
+                                          )
+                                        : const Icon(
+                                            Icons.check_box_outline_blank)),
+                                title: Text(
+                                  note.title,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                trailing: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.purple,
+                                    ),
+                                    onPressed: () {
+                                      setState(() {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (ctx) =>
+                                                EditNote(noteModel: note),
+                                          ),
+                                        );
+                                      });
+                                    },
+                                    child: const Icon(
+                                      Icons.edit,
+                                      color: Colors.white,
+                                    )),
+                              ),
+                            ),
                           );
                         },
                       ),

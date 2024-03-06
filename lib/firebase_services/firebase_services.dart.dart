@@ -39,15 +39,33 @@ class FirebaseServices {
     return noteModel;
   }
 
+  //.................................... updating userNote ............................
+  Future<NoteModel> updateUserNote(
+      String documentId, String userNote, String title, String userId) async {
+    NoteModel noteModel = NoteModel(
+        userId: userId,
+        title: title,
+        userNote: userNote,
+        documentId: documentId,
+        isChecked: false);
+    await _firestore
+        .collection('usersNotes')
+        .doc(noteModel.documentId)
+        .update(noteModel.toJson());
+    return noteModel;
+  }
+
   //.................................... Saving the userNote.............................
   Future<NoteModel> createUserNote(
     String userId,
     String note,
+    String title,
   ) async {
     CollectionReference usersNotesReference =
         _firestore.collection('usersNotes');
     DocumentReference userNoteDocumentReference = usersNotesReference.doc();
     NoteModel noteModel = NoteModel(
+        title: title,
         isChecked: false,
         userId: userId,
         userNote: note,

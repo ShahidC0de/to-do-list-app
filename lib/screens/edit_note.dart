@@ -1,33 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:todo_app/firebase_services/service_provider.dart';
+import 'package:todo_app/models/user_note_model.dart';
 import 'package:todo_app/routes/routes.dart';
 
-class AddNote extends StatefulWidget {
-  const AddNote({super.key});
+class EditNote extends StatefulWidget {
+  final NoteModel noteModel;
+  const EditNote({super.key, required this.noteModel});
 
   @override
-  State<AddNote> createState() => _AddNoteState();
+  State<EditNote> createState() => _EditNoteState();
 }
 
-class _AddNoteState extends State<AddNote> {
-  @override
+class _EditNoteState extends State<EditNote> {
   @override
   Widget build(BuildContext context) {
-    ServiceProvider serviceProvider = ServiceProvider();
-    TextEditingController note = TextEditingController();
-    TextEditingController title = TextEditingController();
+    TextEditingController title =
+        TextEditingController(text: widget.noteModel.title);
+    TextEditingController note =
+        TextEditingController(text: widget.noteModel.userNote);
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Add Note',
+          'Edit Note',
           style: GoogleFonts.acme(),
         ),
-        centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.all(8),
         child: Column(
           children: [
             const SizedBox(
@@ -39,7 +40,7 @@ class _AddNoteState extends State<AddNote> {
               textInputAction: TextInputAction.newline,
               controller: title,
               decoration: InputDecoration(
-                hintText: 'Enter title of your note',
+                hintText: widget.noteModel.title,
                 prefixIcon: const Icon(
                   Icons.title,
                   color: Color.fromARGB(255, 5, 5, 5),
@@ -69,7 +70,7 @@ class _AddNoteState extends State<AddNote> {
               textInputAction: TextInputAction.newline,
               controller: note,
               decoration: InputDecoration(
-                hintText: 'Enter Note',
+                hintText: widget.noteModel.userNote,
                 prefixIcon: const Icon(
                   Icons.note_add,
                   color: Color.fromARGB(255, 5, 5, 5),
@@ -102,8 +103,8 @@ class _AddNoteState extends State<AddNote> {
                   ),
                 ),
                 onPressed: () async {
-                  await serviceProvider.createUserNote(note.text, title.text);
-                  // ignore: use_build_context_synchronously
+                  await ServiceProvider().updateNote(widget.noteModel.userId,
+                      title.text, widget.noteModel.documentId, note.text);
                   setState(() {
                     Navigator.of(context).pushNamed(homeView);
                   });

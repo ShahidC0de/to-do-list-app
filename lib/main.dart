@@ -31,21 +31,29 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => ServiceProvider(),
       child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        routes: {
-          loginView: (context) => const LoginScreen(),
-          signView: (context) => const SignUpView(),
-          homeView: (context) => const HomeScreen(),
-          verificationEmailScreen: (context) => const EmailVerification(),
-          addNoteView: (context) => const AddNote(),
-        },
-        home: const WelcomeScreen(),
-      ),
+          debugShowCheckedModeBanner: false,
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+          ),
+          routes: {
+            loginView: (context) => const LoginScreen(),
+            signView: (context) => const SignUpView(),
+            homeView: (context) => const HomeScreen(),
+            verificationEmailScreen: (context) => const EmailVerification(),
+            addNoteView: (context) => const AddNote(),
+            //editNoteView: (context) => const EditNote(),
+          },
+          home: StreamBuilder(
+              stream: ServiceProvider().getAuthChange,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return const HomeScreen();
+                } else {
+                  return const WelcomeScreen();
+                }
+              })),
     );
   }
 }
